@@ -6,6 +6,7 @@ const REPO = 'anderson3x11/cascades';
 const FRENCH = {
   'nav.features': 'Fonctionnalités',
   'nav.plugins': 'Plugins',
+  'nav.docs': 'Docs',
   'hero.title': 'Des notes qui coulent de source.',
   'hero.lead':
     'Un éditeur de texte léger pensé pour la prise de notes, qui reste capable d’ouvrir n’importe quel fichier texte ou code. La simplicité de Notepad++, la personnalisation de Vim, une interface moderne.',

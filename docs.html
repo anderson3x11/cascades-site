@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cascades documentation</title>
+    <meta name="description" content="Shortcuts, commands and settings of Cascades." />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="./">
+        <img src="assets/logo.svg" alt="" width="32" height="32" />
+        <span>Cascades</span>
+      </a>
+      <nav>
+        <a href="./#features" data-i18n="nav.features">Features</a>
+        <a href="docs.html" data-i18n="nav.docs">Docs</a>
+        <a href="https://github.com/anderson3x11/cascades">GitHub</a>
+        <button id="language" type="button" aria-label="Français">FR</button>
+      </nav>
+    </header>
+
+    <main class="docs">
+      <h1 data-i18n="docs.title">Documentation</h1>
+      <p class="lead" id="version" data-i18n="docs.lead">Shortcuts, commands and settings, as in the app.</p>
+
+      <section class="basics">
+        <div>
+          <h3 data-i18n="leader.title">The leader key</h3>
+          <p data-i18n="leader.text">
+            "Leader S" means: press Ctrl+Space, release, then press S. A bar at the bottom of the window shows the
+            keys that can follow. The leader key is the keyboard.leader setting.
+          </p>
+        </div>
+        <div>
+          <h3 data-i18n="config.title">Your configuration</h3>
+          <p data-i18n="config.text">
+            Preferences (Ctrl+,) changes every setting and shortcut. They are written to settings.json and
+            keybindings.json in the config folder: %APPDATA%\dev.cascades.app on Windows, ~/Library/Application
+            Support/dev.cascades.app on macOS, ~/.config/dev.cascades.app on Linux.
+          </p>
+        </div>
+        <div>
+          <h3 data-i18n="plugins.title">Plugins</h3>
+          <p>
+            <span data-i18n="plugins.text">Add your own commands, panels and more.</span>
+            <a href="https://github.com/anderson3x11/cascades/blob/main/docs/plugins.md" data-i18n="plugins.link"
+              >Write a plugin</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <div class="tools">
+        <input id="search" type="search" placeholder="Search" data-i18n-placeholder="search" />
+        <div class="systems" role="group">
+          <button type="button" data-system="pc" data-i18n="system.pc">Windows and Linux</button>
+          <button type="button" data-system="mac">macOS</button>
+        </div>
+      </div>
+
+      <h2 id="shortcuts" data-i18n="shortcuts.title">Commands and shortcuts</h2>
+      <div id="commands" class="reference"><p class="empty" data-i18n="loading">Loading…</p></div>
+
+      <h2 id="settings" data-i18n="settings.title">Settings</h2>
+      <div id="settings-list" class="reference"></div>
+    </main>
+
+    <footer>
+      <p>
+        <span data-i18n="footer.license">Cascades is free software under the MIT license.</span>
+        <a href="https://github.com/anderson3x11/cascades" data-i18n="footer.source">Source code</a> ·
+        <a href="https://github.com/anderson3x11/cascades/issues/new/choose" data-i18n="footer.issue">Report a bug</a>
+      </p>
+    </footer>
+
+    <script src="docs.js"></script>
+  </body>
+</html>
