@@ -26,6 +26,7 @@ const FRENCH = {
   'footer.license': 'Cascades est un logiciel libre sous licence MIT.',
   'footer.source': 'Code source',
   'footer.issue': 'Signaler un bug',
+  theme: 'Changer de thème',
   version: 'Version {version}. Raccourcis, commandes et réglages, comme dans l’application.',
   default: 'Par défaut',
   values: 'Valeurs',
@@ -35,6 +36,7 @@ const FRENCH = {
 };
 
 const ENGLISH = {
+  theme: 'Switch theme',
   version: 'Version {version}. Shortcuts, commands and settings, as in the app.',
   default: 'Default',
   values: 'Values',
@@ -162,6 +164,7 @@ function render() {
   const button = document.getElementById('language');
   button.textContent = language === 'fr' ? 'EN' : 'FR';
   button.setAttribute('aria-label', language === 'fr' ? 'English' : 'Français');
+  document.getElementById('theme').setAttribute('aria-label', text('theme'));
   for (const choice of document.querySelectorAll('[data-system]')) {
     choice.setAttribute('aria-pressed', String(choice.dataset.system === system));
   }
@@ -177,6 +180,17 @@ function render() {
   renderCommands(data, words);
   renderSettings(data, words);
 }
+
+// The theme button switches between light and dark; the choice is kept.
+document.getElementById('theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try {
+    localStorage.setItem('theme', root.dataset.theme);
+  } catch {
+    // Not remembered, still switched.
+  }
+});
 
 document.getElementById('language').addEventListener('click', () => {
   language = language === 'fr' ? 'en' : 'fr';

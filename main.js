@@ -7,7 +7,8 @@ const FRENCH = {
   'nav.features': 'Fonctionnalités',
   'nav.plugins': 'Plugins',
   'nav.docs': 'Docs',
-  'hero.title': 'Des notes qui coulent de source.',
+  'hero.title': 'Des notes qui',
+  'hero.flow': 'coulent de source.',
   'hero.lead':
     'Un éditeur de texte léger pensé pour la prise de notes, qui reste capable d’ouvrir n’importe quel fichier texte ou code. La simplicité de Notepad++, la personnalisation de Vim, une interface moderne.',
   'hero.download': 'Télécharger',
@@ -39,6 +40,7 @@ const FRENCH = {
   'footer.license': 'Cascades est un logiciel libre sous licence MIT.',
   'footer.source': 'Code source',
   'footer.issue': 'Signaler un bug',
+  theme: 'Changer de thème',
   'download.windows': 'Télécharger pour Windows',
   'download.macos': 'Télécharger pour macOS',
   'download.linux': 'Télécharger pour Linux (AppImage)',
@@ -46,6 +48,7 @@ const FRENCH = {
 };
 
 const ENGLISH = {
+  theme: 'Switch theme',
   'download.windows': 'Download for Windows',
   'download.macos': 'Download for macOS',
   'download.linux': 'Download for Linux (AppImage)',
@@ -102,6 +105,7 @@ function render() {
   const button = document.getElementById('language');
   button.textContent = language === 'fr' ? 'EN' : 'FR';
   button.setAttribute('aria-label', language === 'fr' ? 'English' : 'Français');
+  document.getElementById('theme').setAttribute('aria-label', text('theme'));
 
   const os = system();
   const asset = os && release?.assets.find((a) => INSTALLERS[os].test(a.name));
@@ -116,6 +120,17 @@ function render() {
     });
   }
 }
+
+// The theme button switches between light and dark; the choice is kept.
+document.getElementById('theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try {
+    localStorage.setItem('theme', root.dataset.theme);
+  } catch {
+    // Not remembered, still switched.
+  }
+});
 
 document.getElementById('language').addEventListener('click', () => {
   language = language === 'fr' ? 'en' : 'fr';
@@ -137,3 +152,41 @@ fetch(`https://api.github.com/repos/${REPO}/releases/latest`)
     render();
   })
   .catch(() => {});
+
+// A screenshot opens full size on click (or Enter); a click or Escape closes it.
+const zoom = document.createElement('dialog');
+zoom.className = 'zoom';
+zoom.innerHTML = '<img alt="" />';
+document.body.append(zoom);
+zoom.addEventListener('click', () => zoom.close());
+
+for (const image of document.querySelectorAll('img[data-zoom]')) {
+  image.tabIndex = 0;
+  image.setAttribute('role', 'button');
+  const open = () => {
+    zoom.firstChild.src = image.currentSrc || image.src;
+    zoom.firstChild.alt = image.alt;
+    zoom.showModal();
+  };
+  image.addEventListener('click', open);
+  image.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      open();
+    }
+  });
+}
+
+// Blocks fade in as they scroll into view.
+const reveal = new IntersectionObserver(
+  (entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        reveal.unobserve(entry.target);
+      }
+    }
+  },
+  { threshold: 0.15 },
+);
+for (const element of document.querySelectorAll('.reveal')) reveal.observe(element);
